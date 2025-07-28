@@ -41,6 +41,7 @@ public class MemberController : Controller
         // fotoyla işlem yapılacaği için böyle yapabiliriz
         var user = await _context.Users
             .Include(u => u.Gallery)
+            .Include(uc=> uc.Comments)
             .FirstOrDefaultAsync(u => u.Id == _userManager.GetUserId(User));
 
         if (user == null)
@@ -63,8 +64,29 @@ public class MemberController : Controller
         {
             dto.Photos.Add(photo);
         }
+        
+        foreach (var comment in user.Comments)
+        {
+            dto.Comments.Add(comment);
+        }
 
         return View(dto);
+    }
+    
+    
+    [HttpPost]
+    public async Task<IActionResult> DeleteOwnComment([FromForm]int commentId,[FromForm]string returnURL)
+    {
+        var comment = _context.Comments.Find(commentId);
+        
+        _context.Comments.Remove(comment);
+        await _context.SaveChangesAsync();
+
+        if (returnURL != null)
+        {
+            return Redirect(returnURL);
+        }
+        return RedirectToAction("Index");
     }
 
     [HttpGet]
@@ -254,7 +276,16 @@ public class MemberController : Controller
             return BadRequest();
 
         await _profileImageService.DeleteImageAsync(user.Id, path, ImageType.GalleryPhoto);
-        var ptoto = await _context.UserPhotos.FirstOrDefaultAsync(x => x.Id == id);
+        var ptoto = await _context.UserPhotos.Include(s=>s.Comments).FirstOrDefaultAsync(x => x.Id == id);
+        
+        if (ptoto == null)
+            return NotFound();
+        foreach (var cmt in ptoto.Comments)
+        {
+            // ptoto.Comments.Remove(cmt);
+            _context.Comments.Remove(cmt);
+        }
+        
         _context.UserPhotos.Remove(ptoto);
         await _userManager.UpdateAsync(user);
         return RedirectToAction("Index");

@@ -11,4 +11,6 @@ public class UserDto
     public string? imgPath { get; set; } = "/img/default.png";
 
     public List<UserPhoto>? Photos { get; set; } =  new List<UserPhoto>();
+    public List<Comment>? Comments { get; set; } = new List<Comment>();
+    
 }

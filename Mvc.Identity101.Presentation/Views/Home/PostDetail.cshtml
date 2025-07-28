@@ -1,3 +1,4 @@
+@using System.Security.Claims
 @model Mvc.Identity101.Data.Dto.PostDetailDto
 
 @{
@@ -50,25 +51,41 @@
                     {
                         <div class="card mb-3 bg-dark border border-secondary text-white shadow-sm rounded-3">
                             <div class="card-body">
+                                <!-- Üst kısım: Sol kullanıcı bilgileri, sağda tarih + silme -->
                                 <div class="d-flex justify-content-between align-items-start">
-                                    <!-- Sol taraf: kullanıcı foto ve isim -->
                                     <div class="d-flex">
                                         <img src="@(string.IsNullOrEmpty(commt.User.imgPath) ? "/img/default.jpg" : commt.User.imgPath)"
                                              style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover;"
                                              class="me-3" />
-
-
                                         <div>
                                             <h6 class="card-title mb-1">@commt.User.UserName</h6>
                                             <p class="card-text mb-0">@commt.Content</p>
                                         </div>
                                     </div>
 
-                                    <!-- Sağ üst: tarih -->
-                                    <small class="text-muted">@commt.CreatedDate.ToString("g")</small>
+                                    <!-- Sağ taraf: Tarih + silme birlikte -->
+                                    <div class="text-end">
+                                        <small class="text-muted d-block">@commt.CreatedDate.ToString("g")</small>
+
+                                        @if (@commt.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                                        {
+                                            <form asp-controller="Member" asp-action="DeleteOwnComment" method="post" class="d-inline">
+                                                @{
+                                                    var returnURL = Context.Request.Path + Context.Request.QueryString;
+                                                }
+                                                <input type="hidden" name="returnURL" value="@returnURL" />
+                                                <input type="hidden" name="commentId" value="@commt.CommentId" />
+                                                <button type="submit" class="btn btn-sm btn-outline-danger mt-1 px-2 py-1">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+
                     }
 
                 }

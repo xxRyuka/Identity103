@@ -1,101 +1,202 @@
 @model Mvc.Identity101.Data.Dto.UserDto
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = $"{Model.UserName} - Profil";
     Layout = "_Layout";
 }
 
+@* Geçici mesajları göster, varsa *@
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
-<h1>
-    @TempData["Message"]
-</h1>
+<div class="container py-4">
+    <div class="row g-4">
+        @* Profil Bilgileri ve Eylemler *@
+        <div class="col-lg-4">
+            <div class="card shadow-sm h-100 dark-card">
+                <div class="card-body text-center">
+                    <img src="@Url.Content(Model.imgPath)" alt="Profil Fotoğrafı" class="rounded-circle mb-3"
+                         style="width: 150px; height: 150px; object-fit: cover; border: 3px solid var(--bs-primary);">
 
-<h2>Detail Page</h2>
-<h1>@Model.UserName</h1>
-<h3>@Model.Email</h3>
-<h3>@Model.Phone</h3>
-<h3>@Model.Id ll</h3>
+                    <h2 class="card-title mb-1 text-white">@Model.UserName</h2>
+                    <p class="text-light mb-2">@Model.Email</p>
+                    @if (!string.IsNullOrEmpty(Model.Phone))
+                    {
+                        <p class="text-light mb-3">@Model.Phone</p>
+                    }
+                    <p class="text-muted small">Kullanıcı ID: @Model.Id</p>
 
-<h5>
-    <a class="btn btn-success" asp-action="ChangePhoto" asp-controller="Member">Profil Fotosu</a>
-    <hr>
-    <a class="btn btn-warning" asp-action="AddPost" asp-controller="Member">New Post</a>
-    
-</h5>
+                    <div class="d-grid gap-2 mt-4">
+                        <a class="btn btn-primary" asp-action="ChangePhoto" asp-controller="Member">
+                            Profil Fotoğrafını Değiştir
+                        </a>
+                        <a class="btn btn-outline-primary" asp-action="AddPost" asp-controller="Member">
+                            Yeni Gönderi Ekle
+                        </a>
+                        <a class="btn btn-outline-secondary" asp-action="ChangePassword" asp-controller="Member">
+                            Şifreyi Değiştir
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<h5>
-    <a class="btn btn-outline-danger" asp-action="ChangePassword" asp-controller="Member">Change Password</a>
-</h5>
+        @* Fotoğraf Galerisi Bölümü - İstenildiği gibi DOKUNULMADI *@
+        <div class="col-lg-8">
+           
+            <div class="p-4 h-100 dark-card"> 
+                <div class="d-flex justify-content-between align-items-center mb-4">
+             
+                    <h3 class="mb-0 text-white">Fotoğraf Galerisi</h3>
+                    <a asp-controller="Member" asp-action="AddPost" class="btn btn-primary">
+                        <i class="bi bi-plus-lg me-2"></i>Yeni Fotoğraf Ekle
+                    </a>
+                </div>
 
-<p>img path şu şekilde: @Model.imgPath</p>
-<img src="@Url.Content(Model.imgPath)" alt="Profil Fotoğrafı" class="rounded-circle"
-     style="width:150px; height:150px; object-fit:cover;">
-<br/>
+                @if (!Model.Photos.Any())
+                {
+                    <div class="text-center text-light py-5">
+                        <i class="bi bi-images" style="font-size: 3rem;"></i>
+                        <p class="mt-3">Henüz fotoğraf eklenmemiş</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="gallery-grid">
+                        @foreach (var photo in Model.Photos)
+                        {
+                            <div class="gallery-item">
+                                <a asp-controller="Member" asp-action="ImgDetail" asp-route-id="@photo.Id">
+                                    <img src="@Url.Content(photo.imgPath)" class="gallery-img" alt="Gallery Image"/>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 
+    @* Yorumlar Bölümü *@
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm p-4 dark-card">
+                <h3 class="mb-3 text-white">Yorumlar</h3>
+                <p class="text-light">Bu kısım henüz geliştirilme aşamasındadır. 2</p>
+                <div>
+                    @foreach (var item in Model.Comments)
+                    {
+                        <div class="card mb-2 p-3 bg-dark text-white rounded shadow-sm">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong>@item.User.UserName:</strong>
+                                    <span>@item.Content</span>
+                                    @* <p>@Model.Photos.</p> *@
+                                    <small class="text-muted">(@item.CreatedDate.ToString("g"))</small>
+                                </div>
+                                <form asp-controller="Member" asp-action="DeleteOwnComment" method="post" class="ms-3">
+                                    <input type="hidden" name="commentId" value="@item.CommentId" />
+                                    <input type="hidden" name="photoId" value="@item.UserPhotoId" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i> Sil
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @* Gelecekteki yorumlar buraya eklenecek *@
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Galeri için Dahili Stiller (mevcut haliyle ve dokunulmadan) ve yeni dark-card stili *@
 <style>
+    body {
+        /* Tüm sayfa için koyu bir arka plan */
+        background-color: #1a1a1a; /* Daha koyu bir ton */
+        color: #f8f9fa; /* Açık metin rengi */
+    }
+
+    .dark-card {
+        background-color: #2c2c2c; /* Kartlar için daha koyu gri arka plan */
+        color: #f8f9fa; /* Kart içeriği için açık metin rengi */
+        border: 1px solid rgba(255, 255, 255, 0.1); /* Hafif açık kenarlık */
+        border-radius: 0.75rem; /* Hafif yuvarlak köşeler */
+    }
+
+    /* Bootstrap'in varsayılan text-muted rengini dark kartlar için geçersiz kıl */
+    .dark-card .text-muted {
+        color: #adb5bd !important; /* Koyu arka plan için daha açık soluk metin */
+    }
+
+    /* Buton renklerini koyu temaya uygun hale getir */
+    .btn-primary {
+        background-color: #0d6efd; /* Bootstrap mavisi */
+        border-color: #0d6efd;
+    }
+
+    .btn-primary:hover {
+        background-color: #0b5ed7;
+        border-color: #0b5ed7;
+    }
+
+    .btn-outline-primary {
+        color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #0d6efd;
+        color: #fff;
+    }
+
+    .btn-outline-secondary {
+        color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: #fff;
+    }
+
+    /* Galeri ızgarası */
     .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Daha küçük ekranlar için ayarlandı */
         gap: 1.5rem;
         padding: 1.5rem 0;
     }
-    
+
     .gallery-item {
         aspect-ratio: 1;
-        border-radius: 1rem;
+        border-radius: 0.75rem; /* Hafif yuvarlak köşeler */
         overflow: hidden;
-        background: var(--bg-secondary);
-        border: 1px solid var(--border);
-        transition: transform 0.2s;
+        background: #343a40; /* Galeri öğeleri için daha açık koyu gri */
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        transition: transform 0.2s, box-shadow 0.2s; /* Gölge için geçiş eklendi */
     }
-    
+
     .gallery-item:hover {
         transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3); /* Hover'da daha belirgin gölge */
     }
-    
+
     .gallery-img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         transition: transform 0.3s;
     }
-    
+
     .gallery-img:hover {
         transform: scale(1.05);
     }
 </style>
-
-<div class="glass-card p-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="mb-0">Fotoğraf Galerisi</h3>
-        <a asp-controller="Member" asp-action="AddPost" class="btn btn-primary">
-            <i class="bi bi-plus-lg me-2"></i>Yeni Fotoğraf Ekle
-        </a>
-    </div>
-
-    @if (!Model.Photos.Any())
-    {
-        <div class="text-center text-muted py-5">
-            <i class="bi bi-images" style="font-size: 3rem;"></i>
-            <p class="mt-3">Henüz fotoğraf eklenmemiş</p>
-        </div>
-    }
-    else
-    {
-        <div class="gallery-grid">
-            @foreach (var photo in Model.Photos)
-            {
-                <div class="gallery-item">
-                    <a asp-controller="Member" asp-action="ImgDetail" asp-route-id="@photo.Id">
-                        <img src="@Url.Content(photo.imgPath)" class="gallery-img" alt="Gallery Image"/>
-                    </a>
-                </div>
-            }
-        </div>
-    }
-</div>
-
-<div>
-    @* will be fix *@
-    Comments
-</div>

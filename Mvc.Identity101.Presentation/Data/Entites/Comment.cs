@@ -6,6 +6,8 @@ public class Comment
     public int CommentId { get; set; }
     public string Content { get; set; }
     
+        
+    
     public DateTime CreatedDate { get; set; } = DateTime.UtcNow; // Default value for CreatedDate
     
     
