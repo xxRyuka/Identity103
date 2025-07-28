@@ -1,0 +1,82 @@
+@model Mvc.Identity101.Data.Dto.PostDetailDto
+
+@{
+    ViewBag.Title = "Post Detail";
+    Layout = "_Layout";
+}
+<div class="my-5">
+
+    <div class="row g-4">
+        <!-- Görsel Alanı -->
+        <div class="col-lg-7">
+            <div class="card shadow rounded-4 overflow-hidden">
+                <img src="@Model.ImgPath" class="img-fluid w-100" alt="Post Image">
+            </div>
+            <div>
+                <h4 class="bg-dark text-center my-2" >@Model.Description
+                    
+                </h4>
+                
+            </div>
+        </div>
+
+        <!-- Yorum Alanı -->
+        <div class="col-lg-5">
+            <div class="card shadow rounded-4 p-4 bg-dark text-white">
+                <h4 class="mb-3 text-white">Yorum Yap</h4>
+                <form method="post" asp-action="AddComment" asp-controller="Home">
+
+                    <input type="hidden" name="PhotoId" value="@Model.PhotoId"/>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" name="Content" class="form-control" id="commentContent"
+                               placeholder="Yorumunuzu yazın">
+                        <label for="commentContent">Yorum</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-chat-left-text me-2"></i>Yorumu Gönder
+                    </button>
+                </form>
+            </div>
+
+            <!-- Yorum Listesi -->
+            <div class="mt-4">
+                <h5 class="mb-3 text-white">Tüm Yorumlar</h5>
+
+                @if (Model.Comments?.Any() == true)
+                {
+                    @foreach (var commt in Model.Comments.OrderByDescending(x => x.CreatedDate))
+                    {
+                        <div class="card mb-3 bg-dark border border-secondary text-white shadow-sm rounded-3">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <!-- Sol taraf: kullanıcı foto ve isim -->
+                                    <div class="d-flex">
+                                        <img src="@(string.IsNullOrEmpty(commt.User.imgPath) ? "/img/default.jpg" : commt.User.imgPath)"
+                                             style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover;"
+                                             class="me-3" />
+
+
+                                        <div>
+                                            <h6 class="card-title mb-1">@commt.User.UserName</h6>
+                                            <p class="card-text mb-0">@commt.Content</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sağ üst: tarih -->
+                                    <small class="text-muted">@commt.CreatedDate.ToString("g")</small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+                else
+                {
+                    <div class="alert alert-info mt-3">Henüz yorum yapılmamış.</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

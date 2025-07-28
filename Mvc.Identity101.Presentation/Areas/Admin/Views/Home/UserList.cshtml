@@ -1,0 +1,116 @@
+@model List<Mvc.Identity101.Areas.Admin.Data.Dto.UserListDto>
+
+@{
+    ViewBag.Title = "Kullanıcı Listesi";
+    Layout = "_Layout";
+}
+
+<div class="admin-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="admin-title mb-0">
+            <i style="color:yellow" class="bi bi-people"></i>
+            Kullanıcılar
+        </h2>
+        <div class="d-flex gap-2">
+            <div class="input-group">
+                <span class="input-group-text border-0">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="text" class="admin-form-control" id="userSearch" placeholder="Kullanıcı ara...">
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="admin-table" id="userTable">
+            <thead>
+                <tr>
+                    <th>Kullanıcı Adı</th>
+                    <th>E-posta</th>
+                    <th>Telefon</th>
+                    <th>Roller</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>@user.PhoneNumber</td>
+                        <td>
+                            @foreach (var role in user.Roles)
+                            {
+                                <span class="admin-badge admin-badge-blue me-1">@role</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="admin-actions">
+                                <a asp-controller="Role" asp-action="AssignRole" asp-route-id="@user.Id" 
+                                   class="admin-icon-button" title="Rol Ata">
+                                    <i class="bi bi-shield-plus"></i>
+                                </a>
+                                <button type="button" class="admin-icon-button text-danger" 
+                                        title="Kullanıcı Sil" onclick="showDeleteModal('@user.Id', '@user.UserName')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Silme Modal -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-black" id="deleteUserModalLabel">Kullanıcı Silme Onayı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-black">
+                    <span style="color: black" class="badge bg-primary" id="deleteUserName"></span> kullanıcısını silmek istediğinize emin misiniz?
+                </p>
+                <p class="text-danger">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Bu işlem geri alınamaz!
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <form id="deleteUserForm" method="post" asp-action="RemoveUser" asp-controller="Home" asp-area="Admin">
+                    <input type="hidden" id="deleteUserId" name="id" value="" />
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash me-2"></i>Sil
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('userSearch').addEventListener('keyup', function() {
+            var searchText = this.value.toLowerCase();
+            var rows = document.querySelectorAll('#userTable tbody tr');
+            
+            rows.forEach(function(row) {
+                var text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchText) ? '' : 'none';
+            });
+        });
+        
+        function showDeleteModal(userId, userName) {
+            document.getElementById('deleteUserId').value = userId;
+            document.getElementById('deleteUserName').textContent = userName;
+            var deleteModal = new bootstrap.Modal(document.getElementById('deleteUserModal'));
+            deleteModal.show();
+        }
+    </script>
+}

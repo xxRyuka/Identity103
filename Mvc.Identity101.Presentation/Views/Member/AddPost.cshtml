@@ -1,0 +1,22 @@
+@model Mvc.Identity101.Data.Dto.AddPostDto
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>test img page </h2>
+
+
+<form asp-controller="Member" asp-action="AddPost" enctype="multipart/form-data" method="POST" >
+
+    <label>aciklama bla bla </label>
+    <input type="text" asp-for="description"/>
+    
+    @* <input type="hidden" value="@User.Identity." asp-for="Id"/> *@
+    <label>img</label>
+    @* accept image/* ne ise yariak bi ogren*@
+    <input type="file"  asp-for="img" /> 
+    
+    <button class="btn btn-warning" type="submit">Onayla </button>
+    
+</form>

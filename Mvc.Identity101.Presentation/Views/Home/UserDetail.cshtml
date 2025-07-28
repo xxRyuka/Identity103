@@ -1,0 +1,62 @@
+@model Mvc.Identity101.Models.UserDetailViewModel
+
+@{
+    ViewBag.Title = "Kullanıcı Detayı";
+    Layout = "_Layout";
+}
+
+<div class="container my-4">
+    <a asp-action="PublicList" asp-controller="Home" class="btn btn-secondary mb-3">
+        ← Geri
+    </a>
+
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <img src="@Url.Content(Model.ImgPath)"
+                 class="img-fluid rounded-circle mb-3"
+                 style="width:200px; height:200px; object-fit:cover;"
+                 onerror="this.src='/img/default.jpg';"/>
+            <h3>@Model.UserName</h3>
+            <p class="text-muted">@Model.Email</p>
+            @* telefon numarası ve adres eklicez ilerde ve kategorileri ekledikten sonra onlarıda eklicez *@
+        </div>
+        <div class="col-md-8">
+            <h4>Galeri Fotoğrafları</h4>
+            @if (Model.Photos == null || !Model.Photos.Any())
+            {
+                <p>Bu kullanıcı henüz galerisine fotoğraf eklemedi.</p>
+            }
+            else
+            {
+                <div class="row">
+                    @foreach (var photo in Model.Photos)
+                    {
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <div class="card">
+                                <img src="@Url.Content(photo.ImgPath)"
+                                     class="card-img-top"
+                                     style="height:150px; object-fit:cover;"
+                                     alt="Fotoğraf"/>
+                                <div class="card-body p-2">
+                                    @if (!string.IsNullOrEmpty(photo.Description))
+                                    {
+                                        <p class="card-text text-muted">@photo.Description
+                                        <form asp-controller="Home" asp-action="PostDetail" method="get">
+                                        <input  type="hidden" name="PhotoId" value="@photo.Id" />
+                                        <input  type="hidden" name="ImgPath"  value="@photo.ImgPath" />
+                                        @* <input  type="hidden" asp-for=""  value="@photo.Id" /> *@
+                             
+
+                                            <button type="submit" class="badge btn btn-primary">Comment Test</button>
+                                        </form>
+                                        </p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

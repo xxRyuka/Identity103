@@ -1,0 +1,21 @@
+# Build klasörleri
+bin/
+obj/
+**/.store/
+**/runtimes/
+
+# Rider / VS / VSCode
+.idea/
+.vs/
+.vscode/
+
+# Kişisel ayar dosyaları
+*.user
+*.suo
+
+# Diğer
+*.nupkg
+*.snupkg
+*.log
+"appsettings.json" 
+"appsettings.Development.json"

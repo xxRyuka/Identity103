@@ -1,0 +1,108 @@
+@model Mvc.Identity101.Data.Dto.SignInDto
+@{
+    ViewBag.Title = "Giriş Yap";
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="glass-card p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="mb-4">
+                    <i class="bi bi-person-circle" style="font-size: 3rem; color: yellow "></i>
+                </div>
+                <h4 class="mb-1" style="color: #e2e8f0; font-weight: 600;">Hoş Geldiniz</h4>
+                <p style="color: #94a3b8;">Hesabınıza giriş yapın</p>
+            </div>
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger border-0 mb-4">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-exclamation-circle me-2"></i>
+                        <span>@TempData["Error"]</span>
+                    </div>
+                </div>
+            }
+            <div>
+                <form method="post" asp-action="ExternalLogin">
+                    <input type="hidden" name="returnURL" value="@Context.Request.Query["returnURL"]"/>
+                    <input type="hidden" name="provider" value="Google"/>
+                    <button type="submit" class="btn btn-outline-secondary w-100 mb-3">
+                        <i class="bi bi-google me-2"></i>Google ile Giriş Yap
+                    </button>
+                </form>
+            </div>
+            <form asp-route-returnURL="@Context.Request.Query["returnURL"]" asp-action="SignIn" method="post"
+                  autocomplete="off">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-4">
+                    <label asp-for="Email" class="form-label">E-posta Adresi</label>
+                    <div class="input-group">
+                        <span class="input-group-text border-0" style="background: #0f172a;">
+                            <i class="bi bi-envelope text-muted"></i>
+                        </span>
+                        <input value="ryuka@gmail.com" asp-for="Email" class="form-control border-0 ps-2"
+                               placeholder="ornek@email.com"/>
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label asp-for="Password" class="form-label mb-0">Şifre</label>
+                        <a asp-action="ForgotPassword" class="small" style="color: #3b82f6;">Şifremi Unuttum</a>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text border-0" style="background: #0f172a;">
+                            <i class="bi bi-lock text-muted"></i>
+                        </span>
+                        <input value="Furkan123" asp-for="Password" class="form-control border-0 ps-2" type="password"
+                               placeholder="••••••••"/>
+                        <button class="input-group-text border-0" type="button" onclick="togglePassword(this)"
+                                style="background: #0f172a;">
+                            <i class="bi bi-eye text-muted"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <div class="form-check">
+                        <input asp-for="RememberMe" class="form-check-input"
+                               style="background: #0f172a; border-color: #1e293b;"/>
+                        <label asp-for="RememberMe" class="form-check-label" style="color: #94a3b8;">Beni
+                            Hatırla</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-4">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yap
+                </button>
+
+                <div class="text-center">
+                    <span style="color: #94a3b8;">Hesabınız yok mu?</span>
+                    <a asp-action="SignUp" style="color: #3b82f6;" class="ms-1">Kayıt Ol</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function togglePassword(button) {
+            const input = button.parentElement.querySelector('input');
+            const icon = button.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('bi-eye', 'bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('bi-eye-slash', 'bi-eye');
+            }
+        }
+    </script>
+}

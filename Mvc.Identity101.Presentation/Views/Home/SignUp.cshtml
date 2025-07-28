@@ -1,0 +1,126 @@
+@model Mvc.Identity101.Data.Dto.SignUpDto
+@{
+    ViewBag.Title = "Kayıt Ol";
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="glass-card p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="mb-4">
+                    <i class="bi bi-person-plus" style="font-size: 3rem; color: var(--accent);"></i>
+                </div>
+                <h4 class="mb-1" style="color: var(--text); font-weight: 600;">Yeni Hesap Oluştur</h4>
+                <p style="color: var(--text-muted);">Bilgilerinizi girerek hemen kayıt olun</p>
+            </div>
+
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-success border-0 mb-4">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-check-circle me-2"></i>
+                        <span>@TempData["Message"]</span>
+                    </div>
+                </div>
+            }
+
+            <form asp-action="SignUp" method="post" autocomplete="off">
+                @Html.AntiForgeryToken()
+                
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label asp-for="UserName" class="form-label">Kullanıcı Adı</label>
+                        <div class="input-group">
+                            <span class="input-group-text border-0" style="background: var(--bg-dark);">
+                                <i class="bi bi-person text-muted"></i>
+                            </span>
+                            <input asp-for="UserName" class="form-control border-0 ps-2" placeholder="Kullanıcı adınız" />
+                        </div>
+                        <span asp-validation-for="UserName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <label asp-for="Phone" class="form-label">Telefon</label>
+                        <div class="input-group">
+                            <span class="input-group-text border-0" style="background: var(--bg-dark);">
+                                <i class="bi bi-phone text-muted"></i>
+                            </span>
+                            <input asp-for="Phone" class="form-control border-0 ps-2" placeholder="(5__) ___ __ __" />
+                        </div>
+                        <span asp-validation-for="Phone" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Email" class="form-label">E-posta Adresi</label>
+                    <div class="input-group">
+                        <span class="input-group-text border-0" style="background: var(--bg-dark);">
+                            <i class="bi bi-envelope text-muted"></i>
+                        </span>
+                        <input asp-for="Email" class="form-control border-0 ps-2" placeholder="ornek@email.com" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label asp-for="Password" class="form-label">Şifre</label>
+                        <div class="input-group">
+                            <span class="input-group-text border-0" style="background: var(--bg-dark);">
+                                <i class="bi bi-lock text-muted"></i>
+                            </span>
+                            <input asp-for="Password" class="form-control border-0 ps-2" type="password" placeholder="••••••••" />
+                            <button class="input-group-text border-0" type="button" onclick="togglePassword(this)"
+                                    style="background: var(--bg-dark);">
+                                <i class="bi bi-eye text-muted"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <label asp-for="ConfirmPassword" class="form-label">Şifre Tekrar</label>
+                        <div class="input-group">
+                            <span class="input-group-text border-0" style="background: var(--bg-dark);">
+                                <i class="bi bi-lock text-muted"></i>
+                            </span>
+                            <input asp-for="ConfirmPassword" class="form-control border-0 ps-2" type="password" placeholder="••••••••" />
+                            <button class="input-group-text border-0" type="button" onclick="togglePassword(this)"
+                                    style="background: var(--bg-dark);">
+                                <i class="bi bi-eye text-muted"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-4">
+                    <i class="bi bi-person-plus me-2"></i>Kayıt Ol
+                </button>
+
+                <div class="text-center">
+                    <span style="color: var(--text-muted);">Zaten hesabınız var mı?</span>
+                    <a asp-action="SignIn" style="color: var(--accent);" class="ms-1">Giriş Yap</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function togglePassword(button) {
+            const input = button.parentElement.querySelector('input');
+            const icon = button.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('bi-eye', 'bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('bi-eye-slash', 'bi-eye');
+            }
+        }
+    </script>
+}

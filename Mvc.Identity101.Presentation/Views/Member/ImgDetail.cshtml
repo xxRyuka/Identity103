@@ -1,0 +1,47 @@
+@model Mvc.Identity101.Data.Dto.ImgDetailDto
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>@Model.Description</h2>
+<h5>@Model.UploadDate</h5>
+<div class="col-md-4 col-sm-6">
+    <form method="post" asp-action="DeleteImg">
+        <input type="hidden" name="path" value="@Model.ImgPath" />
+        <input type="hidden" name="id" value="@Model.id" />
+        <button type="submit" class="btn btn-danger">Delete Photo</button>
+    </form>
+    <div class="gallery-item position-relative overflow-hidden rounded shadow-sm">
+
+        <img src="@Url.Content(@Model.ImgPath)" class="img-fluid w-100 gallery-img"/>
+    </div>
+</div>
+
+
+
+
+
+<div>
+    @foreach (var comment in Model.Comments.OrderByDescending(c => c.CreatedDate))
+    {
+        <div class="card mb-2 p-3 bg-dark text-white rounded shadow-sm">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <strong > @comment.User.UserName</strong>
+                    <strong>@comment.Content</strong>
+                    <small class="text-muted">(@comment.CreatedDate.ToString("g"))</small>
+                </div>
+
+                <form asp-action="DeleteComment" method="post" class="ms-3">
+                    <input type="hidden" name="commentId" value="@comment.CommentId" />
+                    <input type="hidden" name="photoId" value="@Model.id" />
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i> Sil
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+</div>

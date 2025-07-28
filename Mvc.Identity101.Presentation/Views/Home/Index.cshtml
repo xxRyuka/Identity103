@@ -1,0 +1,102 @@
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_Layout";
+
+}
+
+<div class="hero-section rounded-3">
+    <div class="hero-content">
+        <h1 class="hero-title">Welcome to Our Platform</h1>
+        @* <p class="hero-subtitle">Discover a new way of managing your digital experience</p> *@
+        <div class="hero-buttons">
+            <a href="#features" class="btn btn-primary btn-hero">Get Started</a>
+            <a href="#about" class="btn btn-outline-light btn-hero">Learn Mores</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<style>
+.hero-section {
+    background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="rgba(255,255,255,0.1)" x="0" y="0" width="100" height="100"/></svg>');
+    opacity: 0.1;
+    animation: backgroundMove 20s linear infinite;
+}
+
+@@keyframes backgroundMove {
+    from { background-position: 0 0; }
+    to { background-position: 100% 100%; }
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 4rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 2rem;
+}
+
+.btn-hero {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    margin: 0.5rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+
+
+@@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .stat-box h2 {
+        font-size: 2rem;
+    }
+    
+    .stat-box p {
+        font-size: 1rem;
+    }
+}
+</style>

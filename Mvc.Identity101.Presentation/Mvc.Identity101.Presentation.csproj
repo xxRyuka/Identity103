@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <UserSecretsId>Mvc.Identity101-ClientSecrets</UserSecretsId>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>Mvc.Identity101</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Admin\Views\Shared\Error.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\Shared\_ValidationScriptsPartial.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Member\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\ProfilePhoto\f74f9b93-40d5-4d52-a89e-b7e46d75bd0b\933a7772-e668-42bc-9057-34322259baca.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\4827d974-b49f-4ea7-8c20-72762ba8d3c1\34a3b2e5-5103-4e09-994f-6d9c72d830dd.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\4827d974-b49f-4ea7-8c20-72762ba8d3c1\4ffb36e8-9baa-45db-b0ce-d95455d60544.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\4827d974-b49f-4ea7-8c20-72762ba8d3c1\raki degil ayran.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\ab362932-65f4-4b7e-812c-d5a983f05f0a\17b0682e-5170-4363-b23d-65e1d6afcfee.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\ab362932-65f4-4b7e-812c-d5a983f05f0a\6879ddec-33fe-4e35-ae58-67eceadaaacd.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\ab362932-65f4-4b7e-812c-d5a983f05f0a\7714b6f8-7709-4860-930f-ed3fcb1197fc.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\ab362932-65f4-4b7e-812c-d5a983f05f0a\bertaraf etcem.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\ab362932-65f4-4b7e-812c-d5a983f05f0a\bertaraf etcem.jpg.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\ab362932-65f4-4b7e-812c-d5a983f05f0a\e2d0387e-a562-4d5c-be44-c06c11f5dbbf.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\ab362932-65f4-4b7e-812c-d5a983f05f0a\e3404222-c86e-4cdf-84d0-1e8d0d6bd0cf.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\ab362932-65f4-4b7e-812c-d5a983f05f0a\fdadc8d1-c397-4a16-9388-ad68e109dedd.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\d5a368a4-e227-433b-b01b-bbd4cd2bfa7f\565dca20-2c98-40ad-a433-8fe80def1e3f.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\uploads\GalleryPhoto\d5a368a4-e227-433b-b01b-bbd4cd2bfa7f\dc59204e-c189-4dca-a4c9-3a57de60bb0d.png" />
+    </ItemGroup>
+
+</Project>

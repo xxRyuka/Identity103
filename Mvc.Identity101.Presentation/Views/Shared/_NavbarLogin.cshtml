@@ -1,0 +1,158 @@
+@using System.Security.Claims
+@{
+    if (!User.Identity.IsAuthenticated)
+    {
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Home" asp-action="SignUp">
+                    <i class="bi bi-person-plus me-2"></i>Kayıt Ol
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Home" asp-action="SignIn">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yap
+                </a>
+            </li>
+        </ul>
+    }
+    else
+    {
+
+        <ul class="navbar-nav align-items-center">
+            @if (User.HasClaim(x => x.Type == ClaimTypes.Role && x.Value == "god"))
+            {
+                <li class="nav-item ms-2">
+                    <a class="btn btn-sm btn-primary" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-shield-lock me-2"></i>Admin Paneli
+                    </a>
+                </li>
+            }
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" 
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <navbar-profile-img></navbar-profile-img>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="profileDropdown">
+                    <li class="dropdown-header text-center border-bottom border-secondary pb-2">
+                        <h6 class="mb-0 text-light">@User.Identity.Name</h6>
+                        <small class="text-light-emphasis">@User.FindFirst(ClaimTypes.Email)?.Value</small>
+                    </li>
+                    <li>
+                        <a class="dropdown-item custom-dropdown-item" asp-controller="Member" asp-action="Index">
+                            <i class="bi bi-person-gear me-2"></i>Profili Düzenle
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item custom-dropdown-item" asp-controller="Member"  asp-action="Claims">
+                            <i class="bi bi-key me-2"></i>Claims
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider bg-secondary"></li>
+                    <li>
+                        <a class="dropdown-item custom-dropdown-item text-danger" asp-controller="Member" 
+                           asp-route-returnURL="/Home/SignIn" asp-action="SignOut">
+                            <i class="bi bi-box-arrow-right me-2"></i>Çıkış Yap
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    }
+}
+
+<style>
+    .profile-img-large {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        display: block;
+        margin: 0 auto;
+        border: 3px solid #007bff;
+        padding: 3px;
+    }
+
+    .modal-content {
+        border-radius: 15px;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .modal-footer {
+        border-top: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .user-info {
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+        margin: 1rem 0;
+    }
+
+    .user-info p {
+        margin: 0;
+    }
+
+    .user-info i {
+        color: #007bff;
+    }
+
+    .dropdown-menu {
+        border: 0;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border-radius: 0.5rem;
+        padding: 1rem 0;
+        min-width: 240px;
+    }
+
+    .dropdown-menu-dark {
+        background-color: #212529;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    }
+
+    .dropdown-header {
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 1rem;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+
+    .custom-dropdown-item {
+        color: #e9ecef;
+        padding: 0.7rem 1.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .custom-dropdown-item:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding-left: 2rem;
+        color: #fff;
+    }
+
+    .custom-dropdown-item i {
+        width: 1.2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .custom-dropdown-item:hover i {
+        transform: scale(1.2);
+    }
+
+    .text-danger:hover {
+        background-color: rgba(220, 53, 69, 0.2) !important;
+    }
+
+    .dropdown-divider {
+        opacity: 0.2;
+    }
+
+    .text-light-emphasis {
+        color: rgba(255, 255, 255, 0.75) !important;
+    }
+</style>

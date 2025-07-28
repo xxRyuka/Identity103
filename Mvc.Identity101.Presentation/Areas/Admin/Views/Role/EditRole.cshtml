@@ -1,0 +1,12 @@
+@model Mvc.Identity101.Areas.Admin.Data.Dto.EditRoleDto
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>edit role page @Model.Name </h2>
+<form method="post" asp-action="EditRole" asp-controller="Role" asp-area="Admin">
+    <input asp-for="Name" type="text" class="form-control my-2"/>
+    <button type="submit" class="btn btn-success">Guncelle</button>
+</form>

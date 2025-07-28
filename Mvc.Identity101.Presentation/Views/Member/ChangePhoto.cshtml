@@ -1,0 +1,23 @@
+@model Mvc.Identity101.Data.Dto.AddPostDto
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>title</h2>
+
+<form asp-controller="Member" asp-action="DeleteProfileImg" method="POST">
+    <button type="submit" class="btn btn-outline-danger">Remosve</button>
+</form>
+<form asp-controller="Member" asp-action="ChangePhoto" enctype="multipart/form-data" method="POST">
+
+
+    <label>img</label>
+    @* accept image/* ne ise yariak bi ogren*@
+    <input type="file" asp-for="img"/>
+
+    <button class="btn btn-warning" type="submit">Onayla</button>
+
+</form>
+

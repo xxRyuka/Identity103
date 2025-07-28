@@ -1,0 +1,191 @@
+﻿@model List<System.Security.Claims.Claim>
+
+@{
+    ViewData["Title"] = "Kullanıcı Bilgileri";
+}
+
+<div class="glass-container">
+    <div class="glass-header">
+        <div class="header-content">
+            <i style="color: yellow" class="bi bi-person-badge-fill"></i>
+            <h1>Claims</h1>
+
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="glass-alert">
+            <i class="bi bi-exclamation-circle"></i>
+            <span>@TempData["Error"]</span>
+        </div>
+    }
+
+    <div class="claims-grid">
+        @foreach (var claim in Model)
+        {
+            <div class="glass-card">
+                <div class="card-icon">
+                    @{
+                        string iconClass = claim.Type.ToLower() switch
+                        {
+                            var type when type.Contains("name") => "bi-person",
+                            var type when type.Contains("email") => "bi-envelope",
+                            var type when type.Contains("role") => "bi-shield",
+                            var type when type.Contains("id") => "bi-fingerprint",
+                            _ => "bi-key"
+                        };
+                    }
+                    <i class="bi @iconClass"></i>
+                </div>
+                <div class="card-content">
+                    <h3>@claim.Type.Split('/').Last()</h3>
+                    <p>@claim.Value</p>
+                    <p>@claim.Type</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+.glass-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.glass-header {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.header-content i {
+    font-size: 2.5rem;
+    color: var(--primary);
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: white;
+}
+
+.glass-header p {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.glass-alert {
+    background: rgba(220, 53, 69, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    color: #fff;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.claims-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, 
+        rgba(var(--primary-rgb), 0.8) 0%, 
+        rgba(var(--primary-dark-rgb), 0.8) 100%
+    );
+    box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.card-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.card-content {
+    flex: 1;
+}
+
+.card-content h3 {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 500;
+}
+
+.card-content p {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+@@media (max-width: 768px) {
+    .glass-container {
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+
+    .glass-header {
+        padding: 1.5rem;
+    }
+
+    .header-content i {
+        font-size: 2rem;
+    }
+
+    .header-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .claims-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>

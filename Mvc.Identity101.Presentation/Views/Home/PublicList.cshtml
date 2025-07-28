@@ -1,0 +1,56 @@
+@model List<Mvc.Identity101.Data.Dto.UserDto>
+
+@{
+    ViewBag.Title = "Kullanıcı Galerisi";
+    Layout = "_Layout";
+}
+
+<h2 class="text-center my-4">Kullanıcı Galerisi</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var user in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <a asp-controller="Home" asp-action="UserDetail" asp-route-id="@user.Id">
+
+                    <div class="position-relative user-card border rounded overflow-hidden shadow-sm">
+                        <img src="@Url.Content(user.imgPath ?? "~/img/default.jpg")"
+                             class="img-fluid w-100 rounded"
+                             style="height: 250px; object-fit: cover;"/>
+
+                        <div class="overlay d-flex align-items-center justify-content-center">
+                            <span class="text-white fw-bold">@user.Email</span>
+                        </div>
+
+                        <div class="p-2 bg-light text-center">
+                            <strong class="text-black">@user.UserName</strong>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .user-card {
+        position: relative;
+    }
+
+    .user-card .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .user-card:hover .overlay {
+        opacity: 1;
+    }
+</style>

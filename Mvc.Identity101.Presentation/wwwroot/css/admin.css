@@ -1,0 +1,156 @@
+/* Admin Container */
+.admin-container {
+    background: rgba(31, 41, 55, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Admin Title */
+.admin-title {
+    color: #f3f4f6;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Admin Card */
+.admin-card {
+    background: rgba(17, 24, 39, 0.95);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    height: 100%;
+}
+
+/* Admin Table */
+.admin-table {
+    width: 100%;
+    background: rgba(17, 24, 39, 0.95);
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.admin-table th {
+    background: rgba(31, 41, 55, 0.95);
+    color: #f3f4f6;
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+}
+
+.admin-table td {
+    padding: 1rem;
+    color: #f3f4f6;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tr:hover {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* Admin Form Elements */
+.admin-form-control {
+    width: 100%;
+    background: rgba(17, 24, 39, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    color: #f3f4f6;
+}
+
+.admin-form-control:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+/* Admin Badges */
+.admin-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.admin-badge-blue {
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+}
+
+.admin-badge-green {
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+}
+
+.admin-badge-red {
+    background: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+}
+
+/* Admin Stats */
+.admin-stat-card {
+    background: rgba(17, 24, 39, 0.95);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.admin-stat-title {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.admin-stat-value {
+    color: #f3f4f6;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Admin Actions */
+.admin-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.admin-icon-button {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.admin-icon-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f3f4f6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 1rem;
+    }
+    
+    .admin-table {
+        display: block;
+        overflow-x: auto;
+    }
+}

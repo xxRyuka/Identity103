@@ -1,0 +1,61 @@
+@model List<Mvc.Identity101.Areas.Admin.Data.Dto.ViewRoleDto>
+
+@{
+    ViewBag.Title = "Roller";
+    Layout = "_Layout";
+}
+
+<div class="admin-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="admin-title mb-0">
+            <i class="bi bi-shield"></i>
+            Roller
+        </h2>
+        <a asp-action="AddRole" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-2"></i>Yeni Rol
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var role in Model)
+        {
+            <div class="col-md-4">
+                <div class="admin-card">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h5  class="mb-1 badge fw-bold fs-6 rounded-pill bg-primary p-3">@role.Name</h5>
+                           
+                        </div>
+                        <div class="admin-actions">
+                            <a asp-action="EditRole" asp-route-id="@role.Id" 
+                               class="admin-icon-button" title="Düzenle">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            @if (role.Name != "admin")
+                            {
+                                <button class="admin-icon-button text-danger" 
+                                        onclick="deleteRole('@role.Id')" 
+                                        title="Sil">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                    
+
+                    
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function deleteRole(roleId) {
+            if (confirm('Bu rolü silmek istediğinize emin misiniz?')) {
+                // Rol silme işlemi
+            }
+        }
+    </script>
+}
