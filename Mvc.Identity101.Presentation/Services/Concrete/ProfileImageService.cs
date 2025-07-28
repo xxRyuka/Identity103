@@ -89,7 +89,7 @@ public class ProfileImageService : IProfileImageService
                     Directory.CreateDirectory(UploadPath);
                 // ismi guid yapmazsan path traversal ile büyük sıkıntı altına girebilirsin
                 // var guidName = Guid.NewGuid().ToString() + extension; // burda acik biraktim 
-                var guidName = file.FileName;
+                var guidName = Guid.NewGuid().ToString()+ extension; 
 
                 var filePath = Path.Combine(UploadPath, guidName);
 
