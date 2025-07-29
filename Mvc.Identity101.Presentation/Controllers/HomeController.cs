@@ -126,7 +126,7 @@ public class HomeController : Controller
         return View();
     }
 
-
+    [Authorize]
     public async Task<IActionResult> PostDetail(PostDetailDto dto)
     {
 
@@ -153,7 +153,7 @@ public class HomeController : Controller
         return View(dto);
     }
 
-
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> AddComment(DropCommentDto request)
     {
