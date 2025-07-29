@@ -31,6 +31,8 @@ public class HomeController : Controller
     {
         ViewBag.UserCount = _userManager.Users.Count();
         ViewBag.RoleCount = _roleManager.Roles.Count();
+        ViewBag.PostCount = await _context.UserPhotos.CountAsync();
+        ViewBag.CommentCount = await _context.Comments.CountAsync();
         return View();
     }
 

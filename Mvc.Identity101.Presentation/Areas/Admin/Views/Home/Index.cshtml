@@ -1,6 +1,6 @@
 @{
-    ViewBag.Title = "Yönetim Paneli";
-    Layout = "_Layout";
+ViewBag.Title = "Yönetim Paneli";
+Layout = "_Layout";
 }
 
 <div class="admin-dashboard">
@@ -14,49 +14,93 @@
         </div>
     </div>
 
-    <div class="dashboard-stats">
-        <div class="stat-card user-card">
-            <div class="stat-card-body">
-                <div class="stat-card-info">
-                    <div class="stat-card-header">
-                        <div class="stat-icon-wrapper">
-                            <i class="bi bi-people-fill"></i>
-                        </div>
-                        <h3 class="stat-title">Kullanıcılar</h3>
-                    </div>
-                    <div class="stat-value-wrapper">
-                        <span class="stat-value">@ViewBag.UserCount</span>
-                        <span class="stat-label">Toplam Kayıtlı Kullanıcı</span>
-                    </div>
+    <!-- Statistics Section -->
+    <div class="statistics-section">
+        <div class="statistics-header">
+            <h2 class="statistics-title">
+                <i class="bi bi-graph-up-arrow me-2"></i>
+                İstatistikler
+            </h2>
+            <p class="statistics-subtitle">Sistem geneli sayısal veriler</p>
+        </div>
+
+        <div class="statistics-grid">
+            <div class="stat-item post-stat">
+                <div class="stat-icon">
+                    <i class="bi bi-file-text-fill"></i>
                 </div>
-                <div class="stat-card-footer">
-                    <a asp-controller="Home"  asp-area="Admin" asp-action="UserList" class="stat-link">
-                        <span>Kullanıcıları Yönet</span>
-                        <i class="bi bi-arrow-right-short"></i>
-                    </a>
+                <div class="stat-content">
+                    <span class="stat-number">@ViewBag.PostCount</span>
+                    <span class="stat-name">Toplam Gönderi</span>
+                </div>
+            </div>
+
+            <div class="stat-item comment-stat">
+                <div class="stat-icon">
+                    <i class="bi bi-chat-dots-fill"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-number">@ViewBag.CommentCount</span>
+                    <span class="stat-name">Toplam Yorum</span>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="stat-card role-card">
-            <div class="stat-card-body">
-                <div class="stat-card-info">
-                    <div class="stat-card-header">
-                        <div class="stat-icon-wrapper">
-                            <i class="bi bi-shield-fill"></i>
+    <!-- Management Section -->
+    <div class="management-section">
+        <div class="management-header">
+            <h2 class="management-title">
+                <i class="bi bi-gear-fill me-2"></i>
+                Yönetim Araçları
+            </h2>
+            <p class="management-subtitle">Sistem yönetimi ve kontrol paneli</p>
+        </div>
+
+        <div class="dashboard-stats">
+            <div class="stat-card user-card">
+                <div class="stat-card-body">
+                    <div class="stat-card-info">
+                        <div class="stat-card-header">
+                            <div class="stat-icon-wrapper">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <h3 class="stat-title">Kullanıcılar</h3>
                         </div>
-                        <h3 class="stat-title">Roller</h3>
+                        <div class="stat-value-wrapper">
+                            <span class="stat-value">@ViewBag.UserCount</span>
+                            <span class="stat-label">Toplam Kayıtlı Kullanıcı</span>
+                        </div>
                     </div>
-                    <div class="stat-value-wrapper">
-                        <span class="stat-value">@ViewBag.RoleCount</span>
-                        <span class="stat-label">Toplam Sistem Rolü</span>
+                    <div class="stat-card-footer">
+                        <a asp-controller="Home"  asp-area="Admin" asp-action="UserList" class="stat-link">
+                            <span>Kullanıcıları Yönet</span>
+                            <i class="bi bi-arrow-right-short"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="stat-card-footer">
-                    <a asp-controller="Role" asp-action="Index" class="stat-link">
-                        <span>Rolleri Yönet</span>
-                        <i class="bi bi-arrow-right-short"></i>
-                    </a>
+            </div>
+
+            <div class="stat-card role-card">
+                <div class="stat-card-body">
+                    <div class="stat-card-info">
+                        <div class="stat-card-header">
+                            <div class="stat-icon-wrapper">
+                                <i class="bi bi-shield-fill"></i>
+                            </div>
+                            <h3 class="stat-title">Roller</h3>
+                        </div>
+                        <div class="stat-value-wrapper">
+                            <span class="stat-value">@ViewBag.RoleCount</span>
+                            <span class="stat-label">Toplam Sistem Rolü</span>
+                        </div>
+                    </div>
+                    <div class="stat-card-footer">
+                        <a asp-controller="Role" asp-action="Index" class="stat-link">
+                            <span>Rolleri Yönet</span>
+                            <i class="bi bi-arrow-right-short"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,166 +108,331 @@
 </div>
 
 <style>
-.admin-dashboard {
-    padding: 1.5rem;
-    max-width: 1400px;
-    margin: 0 auto;
-    position: relative;
-}
+    .admin-dashboard {
+        padding: 1.5rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        position: relative;
+    }
 
-.admin-dashboard::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(17, 17, 17, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    z-index: -1;
-}
+    .admin-dashboard::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(17, 17, 17, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        z-index: -1;
+    }
 
-.dashboard-welcome {
-    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.95) 0%, rgba(var(--primary-dark-rgb), 0.95) 100%);
-    border-radius: 16px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
+    .dashboard-welcome {
+        background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.95) 0%, rgba(var(--primary-dark-rgb), 0.95) 100%);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-.welcome-content {
-    color: white;
-}
+    .welcome-content {
+        color: white;
+    }
 
-.welcome-title {
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-}
+    .welcome-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
 
-.welcome-subtitle {
-    font-size: 1rem;
-    opacity: 0.9;
-    margin: 0;
-}
+    .welcome-subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin: 0;
+    }
 
-.dashboard-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
+    .dashboard-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
 
-.stat-card {
-    background: rgba(25, 25, 25, 0.8);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
+    .stat-card {
+        background: rgba(25, 25, 25, 0.8);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-.stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    background: rgba(30, 30, 30, 0.9);
-}
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        background: rgba(30, 30, 30, 0.9);
+    }
 
-.stat-card-body {
-    padding: 1.5rem;
-}
+    .stat-card-body {
+        padding: 1.5rem;
+    }
 
-.stat-card-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
+    .stat-card-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
 
-.stat-icon-wrapper {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: white;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-}
+    .stat-icon-wrapper {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+    }
 
-.user-card .stat-icon-wrapper {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.9) 0%, rgba(79, 70, 229, 0.9) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
+    .user-card .stat-icon-wrapper {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.9) 0%, rgba(79, 70, 229, 0.9) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-.role-card .stat-icon-wrapper {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.9) 0%, rgba(217, 119, 6, 0.9) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
+    .role-card .stat-icon-wrapper {
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.9) 0%, rgba(217, 119, 6, 0.9) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-.stat-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0;
-    color: rgba(255, 255, 255, 0.95);
-}
+    /* Statistics Section Styles */
+    .statistics-section {
+        background: rgba(30, 30, 30, 0.85);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
 
-.stat-value-wrapper {
-    margin-bottom: 1.5rem;
-}
+    .statistics-header {
+        margin-bottom: 1.5rem;
+    }
 
-.stat-value {
-    display: block;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 0.25rem;
-}
+    .statistics-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.95);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
 
-.stat-label {
-    display: block;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.875rem;
-}
+    .statistics-title i {
+        color: rgba(var(--primary-rgb), 0.9);
+    }
 
-.stat-card-footer {
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
+    .statistics-subtitle {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.95rem;
+        margin: 0;
+    }
 
-.stat-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-decoration: none;
-    color: rgba(var(--primary-rgb), 0.9);
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
+    .statistics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
 
-.stat-link:hover {
-    color: rgb(var(--primary-rgb));
-}
+    .stat-item {
+        background: rgba(40, 40, 40, 0.6);
+        border-radius: 12px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+    }
 
-.stat-link i {
-    font-size: 1.5rem;
-    transition: transform 0.2s ease;
-}
+    .stat-item:hover {
+        background: rgba(45, 45, 45, 0.8);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
 
-.stat-link:hover i {
-    transform: translateX(4px);
-}
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        flex-shrink: 0;
+    }
 
-@@media (max-width: 768px) {
+    .post-stat .stat-icon {
+        background: linear-gradient(135deg, rgba(34, 197, 94, 0.9) 0%, rgba(21, 128, 61, 0.9) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .comment-stat .stat-icon {
+        background: linear-gradient(135deg, rgba(168, 85, 247, 0.9) 0%, rgba(124, 58, 237, 0.9) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.95);
+        line-height: 1;
+    }
+
+    .stat-name {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 500;
+    }
+
+    /* Management Section Styles */
+    .management-section {
+        margin-top: 2rem;
+    }
+
+    .management-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .management-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.95);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .management-title i {
+        color: rgba(var(--primary-rgb), 0.9);
+    }
+
+    .management-subtitle {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.95rem;
+        margin: 0;
+    }
+
+    .stat-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    .stat-value-wrapper {
+        margin-bottom: 1.5rem;
+    }
+
+    .stat-value {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.95);
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+        display: block;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.875rem;
+    }
+
+    .stat-card-footer {
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+        color: rgba(var(--primary-rgb), 0.9);
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+    .stat-link:hover {
+        color: rgb(var(--primary-rgb));
+    }
+
+    .stat-link i {
+        font-size: 1.5rem;
+        transition: transform 0.2s ease;
+    }
+
+    .stat-link:hover i {
+        transform: translateX(4px);
+    }
+
+    .stat-info-only {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .stat-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.875rem;
+        font-weight: 400;
+    }
+
+    .stat-info i {
+        font-size: 1rem;
+        opacity: 0.7;
+    }
+
+    .stat-info-only {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .stat-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.875rem;
+        font-weight: 400;
+    }
+
+    .stat-info i {
+        font-size: 1rem;
+        opacity: 0.7;
+    }
+
+    @@media (max-width: 768px) {
     .admin-dashboard {
         padding: 1rem;
     }
@@ -239,5 +448,26 @@
     .stat-value {
         font-size: 2rem;
     }
-}
+
+    .dashboard-stats {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .statistics-section {
+        padding: 1.5rem;
+    }
+
+    .statistics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-number {
+        font-size: 1.75rem;
+    }
+
+    .statistics-title,
+    .management-title {
+        font-size: 1.25rem;
+    }
+    }
 </style>
